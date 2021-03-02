@@ -60,11 +60,10 @@ public class User {
     Date registrationDate;
 
 
-    @OneToMany
-    @JoinColumn
+    @ManyToMany(mappedBy = "userSet")
     Set<Role> roleSet;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     Set<Delegation> delegationSet;
 
 

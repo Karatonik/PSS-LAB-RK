@@ -3,6 +3,7 @@ package pss.demo.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @AllArgsConstructor
 @Getter
@@ -12,4 +13,7 @@ import javax.persistence.*;
 public class Role {
     @Id
     String roleName;
+
+@ManyToMany
+Set<User> userSet;
 }
