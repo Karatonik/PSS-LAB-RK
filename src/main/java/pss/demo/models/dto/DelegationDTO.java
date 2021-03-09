@@ -1,49 +1,35 @@
-package pss.demo.models;
+package pss.demo.models.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import pss.demo.enums.AutoCapacity;
 import pss.demo.enums.TransportType;
+import pss.demo.models.Delegation;
+import pss.demo.models.User;
 
-import javax.persistence.*;
+
 import java.util.Date;
 
-@AllArgsConstructor
-@NoArgsConstructor
-
-@Entity
-public class Delegation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class DelegationDTO {
     Integer delegationId;
 
     String description;
 
-    @Column(nullable =false)
     Date dateTimeStart;
 
-    @Column(nullable = false)
     Date dateTimeStop;
 
-    @Column(columnDefinition = "float default 30")
     Float travelDietAmount;
 
-    @Column(columnDefinition = "integer default 0")
     Integer breakfastNumber;
 
-    @Column(columnDefinition = "integer default 0")
     Integer dinnerNumber;
 
-    @Column(columnDefinition = "integer default 0")
     Integer supperNumber;
 
     TransportType transportType;
 
     Float ticketPrice;
 
-   AutoCapacity autoCapacity;
+    AutoCapacity autoCapacity;
 
     Integer km;
 
@@ -55,8 +41,46 @@ public class Delegation {
 
     Float otherOutlayPrice;
 
-    @ManyToOne
     User user;
+
+    public DelegationDTO(Integer delegationId, String description, Date dateTimeStart, Date dateTimeStop, Float travelDietAmount, Integer breakfastNumber, Integer dinnerNumber, Integer supperNumber, TransportType transportType, Float ticketPrice, AutoCapacity autoCapacity, Integer km, Float accomodationPrice, Float otherTicketsPrice, Float otherOutlayDesc, Float otherOutlayPrice, User user) {
+        this.delegationId = delegationId;
+        this.description = description;
+        this.dateTimeStart = dateTimeStart;
+        this.dateTimeStop = dateTimeStop;
+        this.travelDietAmount = travelDietAmount;
+        this.breakfastNumber = breakfastNumber;
+        this.dinnerNumber = dinnerNumber;
+        this.supperNumber = supperNumber;
+        this.transportType = transportType;
+        this.ticketPrice = ticketPrice;
+        this.autoCapacity = autoCapacity;
+        this.km = km;
+        this.accomodationPrice = accomodationPrice;
+        this.otherTicketsPrice = otherTicketsPrice;
+        this.otherOutlayDesc = otherOutlayDesc;
+        this.otherOutlayPrice = otherOutlayPrice;
+        this.user = user;
+    }
+    public DelegationDTO(Delegation delegation){
+        this.delegationId=delegation.getDelegationId();
+        this.description=delegation.getDescription();
+        this.dateTimeStart=delegation.getDateTimeStart();
+        this.dateTimeStop=delegation.getDateTimeStop();
+        this.travelDietAmount=delegation.getTravelDietAmount();
+        this.breakfastNumber=delegation.getBreakfastNumber();
+        this.dinnerNumber=delegation.getDinnerNumber();
+        this.supperNumber=delegation.getSupperNumber();
+        this.transportType=delegation.getTransportType();
+        this.ticketPrice=delegation.getTicketPrice();
+        this.autoCapacity=delegation.getAutoCapacity();
+        this.km=delegation.getKm();
+        this.accomodationPrice=delegation.getAccomodationPrice();
+        this.otherTicketsPrice=delegation.getOtherTicketsPrice();
+        this.otherOutlayDesc=delegation.getOtherOutlayDesc();
+        this.otherOutlayPrice=delegation.getOtherOutlayPrice();
+        this.user=delegation.getUser();
+    }
 
     public Integer getDelegationId() {
         return delegationId;

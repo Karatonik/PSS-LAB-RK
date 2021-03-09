@@ -1,5 +1,6 @@
 package pss.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,6 +15,9 @@ public class Role {
     @Id
     String roleName;
 
+
+
 @ManyToMany
+
 Set<User> userSet;
 }
