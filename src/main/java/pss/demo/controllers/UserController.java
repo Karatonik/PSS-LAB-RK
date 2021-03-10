@@ -1,4 +1,4 @@
-package pss.demo.controller;
+package pss.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +7,7 @@ import pss.demo.models.User;
 import pss.demo.services.UserServiceImp;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
@@ -44,7 +45,12 @@ public class UserController {
     }
     //k
     @GetMapping("/byRoleName")
-    public List<User> byRoleName(String roleName){
+    public Set<User> byRoleName(String roleName){
         return userServiceImp.getAllByRoleName(roleName);
+    }
+
+    @PutMapping("/AddRole")
+    public void addRole(String roleName,int userId ){
+      userServiceImp.addRole(roleName,userId);
     }
 }

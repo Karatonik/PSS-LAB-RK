@@ -9,11 +9,4 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
-    public List<User> findAllByRoleSet(String roleName);
-    public List<User> findAllByRoleSetIsLike(String roleName);
-
-
-
-
-
 }

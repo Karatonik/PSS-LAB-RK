@@ -1,7 +1,7 @@
 package pss.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.stereotype.Service;
 import pss.demo.models.Delegation;
 import pss.demo.models.User;
@@ -9,6 +9,7 @@ import pss.demo.repositorys.DelegationRepository;
 import pss.demo.repositorys.UserRepository;
 import pss.demo.services.interfaces.DelegationService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,35 +27,26 @@ public class DelegationServiceImp implements DelegationService {
     @Override
     public boolean remove(int userId, int delegationId) {
         Optional<Delegation> delegationOptional = delegationRepository.findById(delegationId);
-        if(delegationOptional.isPresent()){
+        if (delegationOptional.isPresent()) {
             Delegation delegation = delegationOptional.get();
-            if(delegation.getUser().getUserId()==userId){
+            if (delegation.getUser().getUserId() == userId) {
                 delegationRepository.delete(delegation);
                 return true;
             }
-
         }
         return false;
-
     }
 
     @Override
+    @Modifying
     public void change(int delegationId, Delegation delegation) {
         Optional<Delegation> optionalDelegation = delegationRepository.findById(delegationId);
-        if(optionalDelegation.isPresent()){
-            Delegation delegation1 = optionalDelegation.get();
-            delegationRepository.save(delegation1);
+        if (optionalDelegation.isPresent()) {
+            delegation.setDelegationId(delegationId);
+            delegation.setUser(optionalDelegation.get().getUser());
+            delegationRepository.save(delegation);
         }
     }
-
-//    @Override
-//    @Modifying
-//    public void change(int DelegationId, Delegation delegation) {
-//        Optional<Delegation> delegationOptional = delegationRepository.findById(DelegationId);
-//        delegationOptional.ifPresent(value -> delegationRepository.save(value));
-//    }
-
-
 
     @Override
     public List<Delegation> getAll() {
@@ -63,27 +55,16 @@ public class DelegationServiceImp implements DelegationService {
 
     @Override
     public List<Delegation> getAllOrderByDateStartDesc() {
-      return delegationRepository.findAllByOrderByDateTimeStartDesc();
+        return delegationRepository.findAllByOrderByDateTimeStartDesc();
     }
 
     @Override
     public List<Delegation> getAllByUserOrderByDateStartDesc(int userId) {
-        return delegationRepository.findAllByUserOrderByDateTimeStartDesc(userId);
+        Optional<User> optionalUser = userRepository.findById(userId);
+        List<Delegation> delegationList = new ArrayList<>();
+        if (optionalUser.isPresent()) {
+            return delegationRepository.findAllByUserOrderByDateTimeStartDesc(optionalUser.get());
+        }
+        return delegationList;
     }
-
-    @Override
-    public void saveDel(Delegation delegation) {
-        delegationRepository.save(delegation);
-    }
-
-//    @Override
-//    public void set(int userId, Delegation delegation) {
-//        Optional<User> optionalUser = userRepository.findById(userId);
-//        if (optionalUser.isPresent()) {
-//            User user = optionalUser.get();
-//            user.getDelegationSet().add(delegation);
-//            delegationRepository.save(delegation);
-//            userRepository.save(user);
-//        }
-//    }
 }

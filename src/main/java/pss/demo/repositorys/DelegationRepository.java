@@ -10,8 +10,6 @@ import java.util.Set;
 
 @Repository
 public interface DelegationRepository extends JpaRepository<Delegation,Integer> {
-    public List<Delegation> findAllByUserOrderByDateTimeStartDesc(Integer userId);
+    public List<Delegation> findAllByUserOrderByDateTimeStartDesc(User user);
     public List<Delegation>findAllByOrderByDateTimeStartDesc();
-
-
 }
