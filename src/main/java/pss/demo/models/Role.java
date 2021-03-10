@@ -6,10 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
 
-@AllArgsConstructor
-@Getter
-@Setter
-@NoArgsConstructor
+
 @Entity
 public class Role {
     @Id
@@ -18,6 +15,29 @@ public class Role {
 
 
 @ManyToMany
-
 Set<User> userSet;
+
+    public Role(String roleName, Set<User> userSet) {
+        this.roleName = roleName;
+        this.userSet = userSet;
+    }
+
+    public Role() {
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public Set<User> getUserSet() {
+        return userSet;
+    }
+
+    public void setUserSet(Set<User> userSet) {
+        this.userSet = userSet;
+    }
 }

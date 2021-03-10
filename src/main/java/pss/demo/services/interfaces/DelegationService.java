@@ -17,5 +17,9 @@ public interface DelegationService  {
     List<Delegation> getAllOrderByDateStartDesc();
     //j
     List<Delegation> getAllByUserOrderByDateStartDesc(int userId);
+    //dla mnie
+    void saveDel(Delegation delegation);
+
+
 
 }

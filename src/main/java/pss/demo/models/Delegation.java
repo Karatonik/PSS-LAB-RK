@@ -1,5 +1,6 @@
 package pss.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -54,7 +55,7 @@ public class Delegation {
     Float otherOutlayDesc;
 
     Float otherOutlayPrice;
-
+    @JsonIgnore
     @ManyToOne
     User user;
 

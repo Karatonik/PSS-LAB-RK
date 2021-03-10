@@ -1,35 +1,40 @@
 package pss.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import pss.demo.models.Delegation;
 import pss.demo.models.User;
-import pss.demo.models.dto.UserDTO;
+import pss.demo.repositorys.DelegationRepository;
 import pss.demo.repositorys.UserRepository;
 import pss.demo.services.interfaces.UserService;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UserServiceImp implements UserService {
 
-
+    DelegationRepository delegationRepository;
     UserRepository userRepository;
+
     @Autowired
-    public UserServiceImp(UserRepository userRepository) {
+    public UserServiceImp(DelegationRepository delegationRepository, UserRepository userRepository) {
+        this.delegationRepository = delegationRepository;
         this.userRepository = userRepository;
     }
 
-//    @Override
-//    public List<User> getAllByRoleName(String roleName) {
-//        return userRepository.findAllByRoleName(roleName);
-//    }
+
+
 
     @Override
-    public void set(UserDTO userDTO) {
+    public List<User> getAllByRoleName(String roleName) {
+        return userRepository.findAllByRoleSetIsLike(roleName);
+    }
+
+
+
+    @Override
+    public void set(User user) {
          userRepository.save(user);
     }
 
@@ -44,6 +49,7 @@ public class UserServiceImp implements UserService {
         if(optionalUser.isPresent()){
            User user = optionalUser.get();
                     user.setPassword(newPassword);
+            userRepository.save(user);
         }
 
     }
@@ -54,14 +60,13 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    @Modifying
     public void set(int userId, Delegation delegation) {
         Optional<User> optionalUser = userRepository.findById(userId);
-        if(optionalUser.isPresent()){
+        if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.getDelegationSet().add(delegation);
+            delegationRepository.save(delegation);
             userRepository.save(user);
         }
-
     }
 }

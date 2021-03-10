@@ -3,6 +3,7 @@ package pss.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pss.demo.models.Delegation;
+import pss.demo.models.User;
 import pss.demo.services.DelegationServiceImp;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -23,10 +24,19 @@ public class DelegationController {
         delegationServiceImp.remove(userId,delegationId);
     }
     //g
+//    @PutMapping("/change")
+//    public void change( @RequestBody Delegation delegation,int delegationId){
+//        delegationServiceImp.change(delegationId,delegation);
+//    }
+    //dla mnie
+
     @PutMapping("/change")
-    public void change( int delegationId, Delegation delegation){
-        delegationServiceImp.change(delegationId,delegation);
+   public void change( @RequestBody Delegation delegation) {
+        delegationServiceImp.saveDel( delegation);
     }
+
+
+
 
     //h
     @GetMapping("/deleg")

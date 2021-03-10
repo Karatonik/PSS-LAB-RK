@@ -1,6 +1,7 @@
 package pss.demo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -58,9 +59,12 @@ public class User {
 
 
     @ManyToMany(mappedBy = "userSet")
+    @JsonIgnore
     Set<Role> roleSet;
 
+
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     Set<Delegation> delegationSet;
 
 
