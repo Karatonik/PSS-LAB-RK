@@ -17,17 +17,17 @@ public class DelegationController {
         this.delegationServiceImp = delegationServiceImp;
     }
     //f
-    @DeleteMapping("/remove")
+    @DeleteMapping
     public void remove(int userId, int delegationId){
         delegationServiceImp.remove(userId,delegationId);
     }
     //g
-    @PutMapping("/change")
+    @PutMapping
     public void change( @RequestBody Delegation delegation,int delegationId){
         delegationServiceImp.change(delegationId,delegation);
    }
     //h
-    @GetMapping("/deleg")
+    @GetMapping
     public List<Delegation> getAll(){
         return delegationServiceImp.getAll();
     }

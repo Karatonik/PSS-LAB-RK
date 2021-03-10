@@ -34,7 +34,7 @@ public class UserController {
         userServiceImp.changePassword(userId,newPassword);
     }
     //d
-    @DeleteMapping("/deleteById")
+    @DeleteMapping
     public void deleteById(int userId){
         userServiceImp.deleteById(userId);
     }

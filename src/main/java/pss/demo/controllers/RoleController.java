@@ -21,20 +21,14 @@ public class RoleController {
     }
 
     @PostMapping
-    public Role create(@RequestBody Role role){
-        return roleServiceImp.set(role);
+    public Role create(String roleName){
+        return roleServiceImp.set(roleName);
     }
 
     @DeleteMapping
     public void delete(String roleName) {
         roleServiceImp.delete(roleName);
     }
-
-    @PutMapping
-    public boolean rename(String roleName, String newRoleName) {
-       return roleServiceImp.rename(roleName,newRoleName);
-    }
-
     @GetMapping
     public List<Role> getAll() {
         return roleServiceImp.getAll();

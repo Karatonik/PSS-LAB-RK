@@ -19,7 +19,8 @@ public class RoleServiceImp implements RoleService {
     }
 
     @Override
-    public Role set(Role role) {
+    public Role set(String roleName) {
+        Role role = new Role(roleName);
      return    roleRepository.save(role);
     }
 
@@ -27,18 +28,6 @@ public class RoleServiceImp implements RoleService {
     public void delete(String roleName) {
         Optional<Role> roleOptional = roleRepository.findById(roleName);
         roleOptional.ifPresent(role -> roleRepository.delete(role));
-    }
-
-    @Override
-    public boolean rename(String roleName, String newRoleName) {
-        Optional<Role> optionalRole = roleRepository.findById(roleName);
-        if (optionalRole.isPresent()) {
-            Role role = optionalRole.get();
-            role.setRoleName(newRoleName);
-            roleRepository.save(role);
-            return true;
-        }
-        return false;
     }
 
     @Override
