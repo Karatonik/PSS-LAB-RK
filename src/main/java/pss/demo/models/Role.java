@@ -13,7 +13,7 @@ public class Role {
     String roleName;
 
 
-
+@JsonIgnore
 @ManyToMany
 Set<User> userSet;
 
