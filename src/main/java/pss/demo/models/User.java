@@ -2,11 +2,10 @@ package pss.demo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +14,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,12 +58,12 @@ public class User {
     Date registrationDate;
 
 
-    @ManyToMany(mappedBy = "userSet")
+    @ManyToMany(mappedBy = "userSet",fetch = FetchType.EAGER)
     @JsonIgnore
     Set<Role> roleSet;
 
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     @JsonIgnore
     Set<Delegation> delegationSet;
 

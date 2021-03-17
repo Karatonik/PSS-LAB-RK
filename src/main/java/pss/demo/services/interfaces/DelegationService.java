@@ -7,11 +7,15 @@ import java.util.List;
 
 public interface DelegationService {
 
+
+
+    Delegation get(int delegationId);
+
     //f
     boolean remove(int userId, int delegationId);
 
     //g
-    void change(int DelegationId, Delegation delegation);
+    Delegation change(int DelegationId, Delegation delegation);
 
     //h
     List<Delegation> getAll();

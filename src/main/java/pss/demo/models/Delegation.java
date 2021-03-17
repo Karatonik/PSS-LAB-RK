@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import pss.demo.enums.AutoCapacity;
 import pss.demo.enums.TransportType;
 
@@ -22,6 +23,7 @@ public class Delegation {
 
     String description;
 
+    @CreationTimestamp
     @Column(nullable =false)
     Date dateTimeStart;
 
@@ -194,4 +196,5 @@ public class Delegation {
     public void setUser(User user) {
         this.user = user;
     }
+
 }

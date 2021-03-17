@@ -25,6 +25,13 @@ public class DelegationServiceImp implements DelegationService {
     }
 
     @Override
+    public Delegation get(int delegationId) {
+       Optional<Delegation>optionalDelegation= delegationRepository.findById(delegationId);
+        return optionalDelegation.orElse(null);
+
+    }
+
+    @Override
     public boolean remove(int userId, int delegationId) {
         Optional<Delegation> delegationOptional = delegationRepository.findById(delegationId);
         if (delegationOptional.isPresent()) {
@@ -39,13 +46,14 @@ public class DelegationServiceImp implements DelegationService {
 
     @Override
     @Modifying
-    public void change(int delegationId, Delegation delegation) {
+    public Delegation change(int delegationId, Delegation delegation) {
         Optional<Delegation> optionalDelegation = delegationRepository.findById(delegationId);
         if (optionalDelegation.isPresent()) {
             delegation.setDelegationId(delegationId);
             delegation.setUser(optionalDelegation.get().getUser());
-            delegationRepository.save(delegation);
+        return   delegationRepository.save(delegation);
         }
+        return new Delegation();
     }
 
     @Override
