@@ -23,9 +23,9 @@ public class DelegationController {
     }
     //g
     @PutMapping
-    public void change( @RequestBody Delegation delegation,int delegationId){
-        delegationServiceImp.change(delegationId,delegation);
-   }
+    public Delegation change( @RequestBody Delegation delegation,int delegationId){
+        return  delegationServiceImp.change(delegationId,delegation);
+    }
     //h
     @GetMapping
     public List<Delegation> getAll(){
@@ -41,6 +41,10 @@ public class DelegationController {
     public List<Delegation> UserOrderByDateStartDesc(int userId){
         return delegationServiceImp.getAllByUserOrderByDateStartDesc(userId);
     }
+    /*@GetMapping
+    public Delegation get(int delegationId){
+        return delegationServiceImp.get(delegationId);
+    }*/
 
 
 

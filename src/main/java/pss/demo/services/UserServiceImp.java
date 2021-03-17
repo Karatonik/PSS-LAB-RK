@@ -38,8 +38,8 @@ public class UserServiceImp implements UserService {
 
 
     @Override
-    public void set(User user) {
-        userRepository.save(user);
+    public User set(User user) {
+       return userRepository.save(user);
     }
 
     @Override
@@ -86,5 +86,11 @@ public class UserServiceImp implements UserService {
             userRepository.save(userFound);
             roleRepository.save(roleFound);
         }
+    }
+
+    @Override
+    public User get(int userId) {
+        Optional<User>optionalUser= userRepository.findById(userId);
+        return optionalUser.orElse(null);
     }
 }

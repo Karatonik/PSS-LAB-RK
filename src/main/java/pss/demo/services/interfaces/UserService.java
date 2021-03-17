@@ -12,7 +12,7 @@ public interface UserService {
     Set<User> getAllByRoleName(String roleName);
 
     //a
-    void set(User userDTO);
+    User set(User user);
 
     //b
     List<User> getAll();
@@ -28,4 +28,6 @@ public interface UserService {
 
 
     public void addRole(String roleName, int userId);
+
+    public User get(int userId);
 }
