@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import pss.demo.enums.ERole;
 import pss.demo.models.Delegation;
 import pss.demo.models.Role;
 import pss.demo.models.User;
@@ -41,8 +42,8 @@ public class UserRestControllerTest {
     private final String apiPath = "/users";
     Set<Role> roleSet = new HashSet<>();
     User user1 = new User("NOWE", "NOWE NOWE 14", "1111111111", "NOWE", "NOWY",
-            "NOWY@NOWY.com", "!Nowe2021Nowe", roleSet);
-    Role role = new Role("nowe");
+            "NOWY@NOWY.com", "!Nowe2021Nowe");
+    Role role = new Role(ERole.ROLE_USER);
     Set<Delegation> delegationSet = new HashSet<>();
     @Autowired
     private MockMvc mvc;
@@ -91,7 +92,7 @@ public class UserRestControllerTest {
     @Test//ok
     public void deleteById() throws Exception {
         User user2 = new User("NOWE", "NOWE NOWE 14", "1111111111", "NOWE", "NOWY",
-                "NOWY@NOWY.com", "!Nowe2021Nowe", roleSet);
+                "NOWY@NOWY.com", "!Nowe2021Nowe");
         user2 = userService.set(user2);
         mvc.perform(delete(apiPath+"/?userId="+user2.getUserId()).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -130,7 +131,7 @@ public class UserRestControllerTest {
     @Test//ok
     public void addRole() throws Exception {
        User user2= userService.set(user1);
-      Role role1=  roleService.set("testowe");
+      Role role1=  roleService.set(ERole.ROLE_USER);
         mvc.perform(put(apiPath+"/AddRole?roleName="+role1.getRoleName()+"&userId="+user2.getUserId()).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());

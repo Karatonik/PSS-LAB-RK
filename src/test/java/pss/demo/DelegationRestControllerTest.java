@@ -50,7 +50,7 @@ public class DelegationRestControllerTest {
     Set<Role> roleSet=new HashSet<Role>();
     Delegation delegation1= new Delegation();
     User user1 = new User("NOWE", "NOWE NOWE 14", "1111111111", "NOWE", "NOWY",
-            "NOWY@NOWY.com", "!Nowe2021Nowe", roleSet);
+            "NOWY@NOWY.com", "!Nowe2021Nowe");
     @Test//ok
     public void remove() throws Exception {
         User user= userService.set(user1);

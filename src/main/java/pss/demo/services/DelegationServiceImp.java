@@ -75,4 +75,13 @@ public class DelegationServiceImp implements DelegationService {
         }
         return delegationList;
     }
+
+    @Override
+    public Delegation set(Delegation delegation) {
+        return delegationRepository.save(delegation);
+    }
+    //delete
+    public void deleteById(Integer id) {
+        delegationRepository.deleteById(id);
+    }
 }

@@ -1,5 +1,6 @@
 package pss.demo.services.interfaces;
 
+import pss.demo.enums.ERole;
 import pss.demo.models.Delegation;
 import pss.demo.models.Role;
 import pss.demo.models.User;
@@ -9,7 +10,7 @@ import java.util.Set;
 
 public interface UserService {
     //k
-    Set<User> getAllByRoleName(String roleName);
+//    Set<User> getAllByRoleName(ERole roleName);
 
     //a
     User set(User user);
@@ -27,7 +28,7 @@ public interface UserService {
     void set(int userId, Delegation delegation);
 
 
-    public void addRole(String roleName, int userId);
+//    public void addRole(ERole roleName, int userId);
 
     public User get(int userId);
 }
