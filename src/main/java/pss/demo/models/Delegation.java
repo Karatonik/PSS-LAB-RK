@@ -1,10 +1,6 @@
 package pss.demo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import pss.demo.enums.AutoCapacity;
 import pss.demo.enums.TransportType;
@@ -12,8 +8,7 @@ import pss.demo.enums.TransportType;
 import javax.persistence.*;
 import java.util.Date;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 
 @Entity
 public class Delegation {
@@ -60,6 +55,29 @@ public class Delegation {
     @JsonIgnore
     @ManyToOne
     User user;
+
+    public Delegation() {
+    }
+
+    public Delegation(Integer delegationId, String description, Date dateTimeStart, Date dateTimeStop, Float travelDietAmount, Integer breakfastNumber, Integer dinnerNumber, Integer supperNumber, TransportType transportType, Float ticketPrice, AutoCapacity autoCapacity, Integer km, Float accomodationPrice, Float otherTicketsPrice, Float otherOutlayDesc, Float otherOutlayPrice, User user) {
+        this.delegationId = delegationId;
+        this.description = description;
+        this.dateTimeStart = dateTimeStart;
+        this.dateTimeStop = dateTimeStop;
+        this.travelDietAmount = travelDietAmount;
+        this.breakfastNumber = breakfastNumber;
+        this.dinnerNumber = dinnerNumber;
+        this.supperNumber = supperNumber;
+        this.transportType = transportType;
+        this.ticketPrice = ticketPrice;
+        this.autoCapacity = autoCapacity;
+        this.km = km;
+        this.accomodationPrice = accomodationPrice;
+        this.otherTicketsPrice = otherTicketsPrice;
+        this.otherOutlayDesc = otherOutlayDesc;
+        this.otherOutlayPrice = otherOutlayPrice;
+        this.user = user;
+    }
 
     public Integer getDelegationId() {
         return delegationId;

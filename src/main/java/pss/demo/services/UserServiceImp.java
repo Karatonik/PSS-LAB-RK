@@ -1,7 +1,13 @@
 package pss.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import pss.demo.enums.ERole;
 import pss.demo.models.Delegation;
 import pss.demo.models.Role;
 import pss.demo.models.User;
@@ -14,6 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -29,12 +36,12 @@ public class UserServiceImp implements UserService {
         this.roleRepository = roleRepository;
     }
 
-    @Override
-    public Set<User> getAllByRoleName(String roleName) {
-        Optional<Role> optionalRole = roleRepository.findById(roleName);
-        Set<User>userSet = new HashSet<>();
-        return optionalRole.map(Role::getUserSet).orElse(userSet);
-    }
+//    @Override
+//    public Set<User> getAllByRoleName(ERole roleName) {
+//        Optional<Role> optionalRole = roleRepository.findById(String.valueOf(roleName));
+//        Set<User>userSet = new HashSet<>();
+//        return optionalRole.map(Role::getUserSet).orElse(userSet);
+//    }
 
 
     @Override
@@ -74,23 +81,24 @@ public class UserServiceImp implements UserService {
         }
     }
 
-    @Override
-    public void addRole(String roleName, int userId) {
-        Optional<User>optionalUser = userRepository.findById(userId);
-        Optional<Role>optionalRole = roleRepository.findById(roleName);
-        if(optionalUser.isPresent()&&optionalRole.isPresent()){
-            User  userFound= optionalUser.get();
-            Role roleFound = optionalRole.get();
-            roleFound.getUserSet().add(userFound);
-            userFound.getRoleSet().add(roleFound);
-            userRepository.save(userFound);
-            roleRepository.save(roleFound);
-        }
-    }
+//    @Override
+//    public void addRole(ERole roleName, int userId) {
+//        Optional<User>optionalUser = userRepository.findById(userId);
+//        Optional<Role>optionalRole = roleRepository.findById(String.valueOf(roleName));
+//        if(optionalUser.isPresent()&&optionalRole.isPresent()){
+//            User  userFound= optionalUser.get();
+//            Role roleFound = optionalRole.get();
+//            roleFound.get().add(userFound);
+//            userFound.getRoleSet().add(roleFound);
+//            userRepository.save(userFound);
+//            roleRepository.save(roleFound);
+//        }
+//    }
 
     @Override
     public User get(int userId) {
         Optional<User>optionalUser= userRepository.findById(userId);
         return optionalUser.orElse(null);
     }
+   
 }

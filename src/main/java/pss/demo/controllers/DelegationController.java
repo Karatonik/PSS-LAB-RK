@@ -1,12 +1,15 @@
 package pss.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pss.demo.models.Delegation;
+import pss.demo.models.User;
 import pss.demo.services.DelegationServiceImp;
 
 import java.util.List;
-
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/delegations")
 public class DelegationController {
@@ -45,9 +48,23 @@ public class DelegationController {
     public Delegation get(int delegationId){
         return delegationServiceImp.get(delegationId);
     }*/
+    //
+    @PostMapping("/register")
+    public void register(@RequestBody Delegation delegation){
+        delegationServiceImp.set(delegation);
+    }
 
-
-
+    //edit
+    @PutMapping("/delegationEdit/{delegation}")
+    public ResponseEntity<Delegation> updateDelegation(Delegation delegation){
+        return new ResponseEntity<>(delegationServiceImp.set(delegation), HttpStatus.OK);
+    }
+    //delete
+    @DeleteMapping("/deleteDelegations/{id}")
+    public ResponseEntity<Void> deleteDelegation(@PathVariable  Integer id){
+        delegationServiceImp.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }

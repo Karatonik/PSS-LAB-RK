@@ -1,6 +1,7 @@
 package pss.demo.services.interfaces;
 
 
+import org.springframework.web.filter.DelegatingFilterProxy;
 import pss.demo.models.Delegation;
 
 import java.util.List;
@@ -26,4 +27,7 @@ public interface DelegationService {
     //j
     List<Delegation> getAllByUserOrderByDateStartDesc(int userId);
 
+    //
+    Delegation set (Delegation delegation);
+    void deleteById(Integer id);
 }

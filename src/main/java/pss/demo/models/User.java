@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -27,7 +28,7 @@ public class User {
     String companyAddress;
 
     @NotBlank(message ="companyNip cannot be blank " )
-    @Pattern(regexp="^[0-9]{10}$\n",message ="incorrect companyNip" )
+        @Pattern(regexp="^[0-9]{10}$\n",message ="incorrect companyNip" )
     String companyNip;
 
     @NotBlank(message ="name cannot be blank " )
@@ -41,12 +42,8 @@ public class User {
 
 
     @NotBlank(message ="password cannot be blank " )
-    @Pattern(regexp="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$",message ="incorrect password" )
-    //Password must contain at least one digit [0-9].
-    // Password must contain at least one lowercase Latin character [a-z].
-    //Password must contain at least one uppercase Latin character [A-Z].
-    //Password must contain at least one special character like ! @ # & ( ).
-    //Password must contain a length of at least 8 characters and a maximum of 20 characters.
+    @Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$\"",message ="incorrect password" )
+    //Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
     String password;
 
 
@@ -55,15 +52,17 @@ public class User {
 
     @CreationTimestamp
     @Column(updatable = false)
-    Date registrationDate;
+        Date registrationDate;
 
 
-    @ManyToMany(mappedBy = "userSet",fetch = FetchType.EAGER)
-    @JsonIgnore
-    Set<Role> roleSet;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(	name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roleSet = new HashSet<>();
 
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     @JsonIgnore
     Set<Delegation> delegationSet;
 
@@ -89,15 +88,15 @@ public class User {
     public User(@NotBlank(message = "companyName cannot be blank ") String companyName,
                 @NotBlank(message = "companyAddress cannot be blank ") String companyAddress,
                 @NotBlank(message = "companyNip cannot be blank ")
-                @Pattern(regexp = "^[0-9]{10}$\n", message = "incorrect companyNip") String companyNip,
+                @Pattern(regexp = "^[0-9]{10}$", message = "incorrect companyNip") String companyNip,
                 @NotBlank(message = "name cannot be blank ") String name,
                 @NotBlank(message = "lastName cannot be blank ") String lastName,
-                @NotBlank(message = "email cannot be blank ") @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+                @NotBlank(message = "email cannot be blank ") @Pattern(regexp = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
                         message = "incorrect email") String email,
                 @NotBlank(message = "password cannot be blank ")
                 @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$",
-                        message = "incorrect password") String password,
-                Set<Role> roleSet) {
+                        message = "incorrect password") String password
+               ) {
         this.companyName = companyName;
         this.companyAddress = companyAddress;
         this.companyNip = companyNip;
@@ -105,8 +104,9 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.roleSet=roleSet;
+
     }
+
 
     public Integer getUserId() {
         return userId;

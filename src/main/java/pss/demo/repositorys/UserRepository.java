@@ -6,7 +6,13 @@ import org.springframework.stereotype.Repository;
 import pss.demo.models.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
+    Optional<User> findByName(String name);
+
+    Boolean existsByName(String name);
+
+    Boolean existsByEmail(String email);
 }

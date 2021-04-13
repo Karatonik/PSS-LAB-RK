@@ -4,46 +4,56 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import pss.demo.enums.ERole;
 
 import javax.persistence.*;
 import java.util.Set;
 
 
 @Entity
+@Table(name = "roles")
 public class Role {
+
     @Id
-    String roleName;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private ERole roleName;
 
 
-@JsonIgnore
-@ManyToMany
-Set<User> userSet;
 
-    public Role(String roleName, Set<User> userSet) {
+
+
+    public Role(Integer id, ERole roleName) {
+        this.id = id;
         this.roleName = roleName;
-        this.userSet = userSet;
+
     }
 
     public Role() {
     }
 
-    public Role(String roleName) {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Role(ERole roleName) {
         this.roleName = roleName;
     }
 
-    public String getRoleName() {
+    public ERole getRoleName() {
         return roleName;
     }
 
-    public void setRoleName(String roleName) {
+    public void setRoleName(ERole roleName) {
         this.roleName = roleName;
     }
 
-    public Set<User> getUserSet() {
-        return userSet;
-    }
 
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
-    }
 }
