@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pss.demo.enums.ERole;
@@ -24,16 +25,17 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImp implements UserService {
-
+    PasswordEncoder encoder;
     DelegationRepository delegationRepository;
     UserRepository userRepository;
     RoleRepository roleRepository;
 
     @Autowired
-    public UserServiceImp(DelegationRepository delegationRepository, UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImp(DelegationRepository delegationRepository, UserRepository userRepository, RoleRepository roleRepository,PasswordEncoder encoder) {
         this.delegationRepository = delegationRepository;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.encoder=encoder;
     }
 
 //    @Override
@@ -59,7 +61,7 @@ public class UserServiceImp implements UserService {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            user.setPassword(newPassword);
+            user.setPassword(encoder.encode(newPassword));
             userRepository.save(user);
         }
     }
