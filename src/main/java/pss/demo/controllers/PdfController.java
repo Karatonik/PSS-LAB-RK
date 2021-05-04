@@ -1,5 +1,6 @@
 package pss.demo.controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pss.demo.services.PdfServiceImp;
 
@@ -20,13 +21,13 @@ public class PdfController {
     }
 
     @GetMapping("/local/{delegationId}")
-    public void saveDelegationToPdf(@PathVariable int delegationId) throws FileNotFoundException {
-        pdfServiceImp.saveDelegationToPdf(delegationId);
+    public ResponseEntity<Void> saveDelegationToPdf(@PathVariable int delegationId) throws FileNotFoundException {
+        return  pdfServiceImp.saveDelegationToPdf(delegationId);
     }
 
     @GetMapping("/{delegationId}")
-    public void printToPdf(@PathVariable int delegationId , HttpServletResponse response) throws IOException {
-        pdfServiceImp.printToPdf(delegationId,response);
+    public ResponseEntity<Void> printToPdf(@PathVariable int delegationId , HttpServletResponse response) throws IOException {
+     return  pdfServiceImp.printToPdf(delegationId,response);
     }
 
 }
