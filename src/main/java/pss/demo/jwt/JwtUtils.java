@@ -1,4 +1,4 @@
-package pss.demo.security.jwt;
+package pss.demo.jwt;
 
 
 import io.jsonwebtoken.*;
@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import pss.demo.security.services.UserDetailsImpl;
+import pss.demo.models.UserDetailsImpl;
 
 import java.util.Date;
 

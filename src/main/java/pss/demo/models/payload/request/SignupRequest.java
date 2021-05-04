@@ -1,4 +1,4 @@
-package pss.demo.payload.request;
+package pss.demo.models.payload.request;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Set;

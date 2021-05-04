@@ -1,4 +1,4 @@
-package pss.demo.security.jwt;
+package pss.demo.jwt;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

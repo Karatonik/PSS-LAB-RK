@@ -1,4 +1,4 @@
-package pss.demo.payload.response;
+package pss.demo.models.payload.response;
 
 public class MessageResponse {
 	private String message;

@@ -1,11 +1,10 @@
-package pss.demo.security.services;
+package pss.demo.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import pss.demo.models.User;
 
 import java.util.Collection;
 import java.util.List;

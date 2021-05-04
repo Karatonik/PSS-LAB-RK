@@ -1,4 +1,4 @@
-package pss.demo.security.services;
+package pss.demo.services;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pss.demo.models.User;
+import pss.demo.models.UserDetailsImpl;
 import pss.demo.repositorys.UserRepository;
 
 @Service
