@@ -18,6 +18,7 @@ import DelegationList from './Components/DelegationList';
 import ChangePass from './Components/ChangePass';
 import Delegation from './Components/Delegation';
 import Footer from './Components/Footer';
+import LoginFb from './Components/LoginFb'
 
 class App extends Component {
   constructor(props) {
@@ -114,6 +115,12 @@ class App extends Component {
                   Login
                 </Link>
               </li>
+           
+              <li className="nav-item">
+              <Link to={"/loginFb"} className="nav-link">
+                  Login Facebook
+                </Link>
+                </li>
 
               <li className="nav-item">
                 <Link to={"/register"} className="nav-link">
@@ -145,7 +152,7 @@ class App extends Component {
 			      <Route path = "/changePass" exact component = {ChangePass}/>
 			      <Route path="/edit/:id" exact component ={User}/>
 			      <Route path="/editDelegation/:id" exact component ={Delegation}/>
-
+            <Route path = "/loginFb" exact component = {LoginFb}/>
 
           </Switch>
 		  <Footer/>

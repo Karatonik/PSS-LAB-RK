@@ -77,7 +77,7 @@ export default class Register extends Component {
       companyNip: "",
       name: "",
       lastName: "",
-      email: "",
+      email:"",
       password: "",
    
 
@@ -109,7 +109,7 @@ export default class Register extends Component {
 
   onChangeName(e) {
     this.setState({
-      name: e.target.value
+      name: e.target.value 
     });
   }
 
@@ -138,7 +138,7 @@ export default class Register extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.register(
         this.state.name,
-        this.state.email,
+        this.state.emai,
         this.state.password,
         this.state.companyName,
         this.state.companyAddress,
@@ -168,9 +168,32 @@ export default class Register extends Component {
       );
     }
   }
-
+  responseGoogle=(response)=>{
+    this.setState({
+      
+    });
+    console.log(response)
+    console.log(response.profileObj);
+    localStorage.setItem('email',response.profileObj.email)
+    localStorage.setItem('givenName',response.profileObj.givenName)
+    localStorage.setItem('familyName',response.profileObj.familyName)
+    const emailFromGoogle = localStorage.getItem('email')
+    const nameFromGoogle = localStorage.getItem('givenName')
+    const lastNameFromGoogle = localStorage.getItem('familyName')
+     console.log("Google: " ,emailFromGoogle,nameFromGoogle,lastNameFromGoogle)
+  }
+  responseFacebook=(response)=>{
+    console.log(response);
+    localStorage.setItem('email',response.email)
+    localStorage.setItem('name',response.name)
+    const emailFromFacebook = localStorage.getItem('email')
+    const nameFromFacebook = localStorage.getItem('name')
+    console.log("Facebook: ",emailFromFacebook,nameFromFacebook)
+  }
   render() {
     return (
+      <div>
+     
       <div className="col-md-12">
         <div className="card card-container">
           <img
@@ -214,10 +237,9 @@ export default class Register extends Component {
                   <label htmlFor="email">Email</label>
                   <Input
                     type="email"
-                    // type="text"
                     className="form-control"
                     name="email"
-                    value={this.state.email}
+                    value={this.state.emai}
                     onChange={this.onChangeEmail}
                     validations={[required, email]}
                      pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
@@ -303,6 +325,8 @@ export default class Register extends Component {
           </Form>
         </div>
       </div>
+      </div>
+      
     );
   }
 }
