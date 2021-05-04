@@ -59,7 +59,11 @@ public class Delegation {
     public Delegation() {
     }
 
-    public Delegation(Integer delegationId, String description, Date dateTimeStart, Date dateTimeStop, Float travelDietAmount, Integer breakfastNumber, Integer dinnerNumber, Integer supperNumber, TransportType transportType, Float ticketPrice, AutoCapacity autoCapacity, Integer km, Float accomodationPrice, Float otherTicketsPrice, Float otherOutlayDesc, Float otherOutlayPrice, User user) {
+    public Delegation(Integer delegationId, String description, Date dateTimeStart, Date dateTimeStop
+            , Float travelDietAmount, Integer breakfastNumber, Integer dinnerNumber
+            , Integer supperNumber, TransportType transportType, Float ticketPrice
+            , AutoCapacity autoCapacity, Integer km, Float accomodationPrice
+            , Float otherTicketsPrice, Float otherOutlayDesc, Float otherOutlayPrice, User user) {
         this.delegationId = delegationId;
         this.description = description;
         this.dateTimeStart = dateTimeStart;
@@ -215,4 +219,25 @@ public class Delegation {
         this.user = user;
     }
 
+
+    @Override
+    public String toString() {
+        return "delegationId=" + delegationId +
+                ", description='" + description + '\'' +
+                ", dateTimeStart=" + dateTimeStart +
+                ", dateTimeStop=" + dateTimeStop +
+                ", travelDietAmount=" + travelDietAmount +
+                ", breakfastNumber=" + breakfastNumber +
+                ", dinnerNumber=" + dinnerNumber +
+                ", supperNumber=" + supperNumber +
+                ", transportType=" + transportType +
+                ", ticketPrice=" + ticketPrice +
+                ", autoCapacity=" + autoCapacity +
+                ", km=" + km +
+                ", accomodationPrice=" + accomodationPrice +
+                ", otherTicketsPrice=" + otherTicketsPrice +
+                ", otherOutlayDesc=" + otherOutlayDesc +
+                ", otherOutlayPrice=" + otherOutlayPrice +
+                ", user=" + user;
+    }
 }
