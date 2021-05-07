@@ -19,7 +19,7 @@ import ChangePass from './Components/ChangePass';
 import Delegation from './Components/Delegation';
 import Footer from './Components/Footer';
 import LoginFb from './Components/LoginFb'
-
+import LoginGoogle from './Components/LoginG';
 class App extends Component {
   constructor(props) {
     super(props);
@@ -128,7 +128,11 @@ class App extends Component {
                 </Link>
               </li>
 
-           
+            <li>
+            <Link to={"/loginGoogle"} className="nav-link">
+                  Login Google
+                </Link>
+            </li>
 
 			
             </div>
@@ -153,6 +157,7 @@ class App extends Component {
 			      <Route path="/edit/:id" exact component ={User}/>
 			      <Route path="/editDelegation/:id" exact component ={Delegation}/>
             <Route path = "/loginFb" exact component = {LoginFb}/>
+            <Route path = "/loginGoogle" exact component = {LoginGoogle}/>
 
           </Switch>
 		  <Footer/>

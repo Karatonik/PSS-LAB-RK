@@ -1,9 +1,10 @@
 
 import axios from 'axios';
 import React, { Component } from 'react';
-import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 import { Redirect } from 'react-router-dom';
-export default class LoginFb extends Component {
+
+export default class LoginGoogle extends Component {
     state = {
         errorMessage: '',
         isLoggedIn: false,
@@ -12,14 +13,19 @@ export default class LoginFb extends Component {
         email: '',
         picture: ''
     }
+    
     handleResponse = (data) => {
 
-        if (data.email && data.userID && data.accessToken && data.name) {
+        if (data.profileObj.email &&
+            data.profileObj.googleId && 
+            data.accessToken && 
+            data.profileObj.familyName &&
+            data.profileObj.givenName) {
 
             const body = {
-                email: data.userID + data.email,
+                email: data.profileObj.googleId + data.profileObj.email,
                 password: data.accessToken,
-                nick: data.name
+                nick: data.profileObj.givenName + " " + data.profileObj.familyName
             }
 
             axios.post('http://localhost:8080/api/auth/external/', body).then(
@@ -27,10 +33,12 @@ export default class LoginFb extends Component {
                     localStorage.setItem('token', res.data.token);
                     localStorage.setItem('email', res.data.email);       
                     localStorage.setItem('nick',res.data.nick);
+                 
                     this.setState({
                         loggedIn: true
+                         
                     });
-                    
+                  
                     window.location.reload();
                 }
             ).catch(err => {
@@ -44,32 +52,32 @@ export default class LoginFb extends Component {
         }
     }
 
+    responseGoogle = (response) => {
+        console.log(response);
+      }
+
     render() {
-        let fbContent = null;
+        let googleContent = null;
 
         if(localStorage.getItem('token')){
            
-               return <Redirect to ={'/'}/>
-               
-              
+            return <Redirect to ={'/'}/>
         } else {
-            fbContent = (<FacebookLogin
-                appId="334011424722948"
-                autoLoad={true}
-                fields="name,email,picture"
-                callback={this.handleResponse}
-                icon="fa-facebook"
-                textButton='zaloguj'
-                size='small'
-            />);
+            googleContent = (<GoogleLogin
+            clientId="674430789110-38vkhnf8pr5mo1dh8slita5phh28fnga.apps.googleusercontent.com"
+            buttonText="Zaloguj"
+            onSuccess={this.handleResponse}
+            onFailure={this.handleResponse}
+            cookiePolicy={'single_host_origin'}
+          />);
         }
 
         return (
             <div>
                 <div>
-                    {fbContent}
+                    {googleContent}
                 </div>
             </div>
         );
     }
-} 
+}
