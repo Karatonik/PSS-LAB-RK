@@ -94,7 +94,7 @@ public class DelegationServiceImp implements DelegationService {
     }
 
     @Override
-    public boolean changeAcceptDelegation(Integer delegationId, Integer userId) {
+    public String changeAcceptDelegation(Integer delegationId, Integer userId) {
         Optional<Delegation> optionalDelegation = delegationRepository.findById(delegationId);
         if(optionalDelegation.isPresent()){
             Optional<User>optionalUser = userRepository.findById(userId);
@@ -112,18 +112,18 @@ public class DelegationServiceImp implements DelegationService {
                     }else if(delegation.isFinishedEdition()){
                         delegation.setConfirmation(true);
                     }else {
-                        return false;
+                        return "Delegacja nie jest ukończona";
                     }
                     delegationRepository.save(delegation);
-                    return true;
+                    return "Zapisano zmaine akcpetacji";
                 }
             }
         }
-        return false;
+        return "Zmiana nie powiodła się";
     }
 
     @Override
-    public boolean changeFinishedEdition(Integer delegationId) {
+    public String changeFinishedEdition(Integer delegationId) {
         Optional<Delegation>optionalDelegation = delegationRepository.findById(delegationId);
         if(optionalDelegation.isPresent()){
             Delegation delegation = optionalDelegation.get();
@@ -134,8 +134,8 @@ public class DelegationServiceImp implements DelegationService {
                 delegation.setFinishedEdition(true);
             }
             delegationRepository.save(delegation);
-            return true;
+            return "Zapisano";
         }
-        return false;
+        return "Nie powiodło się";
     }
 }

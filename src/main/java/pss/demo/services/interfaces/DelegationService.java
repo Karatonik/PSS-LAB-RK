@@ -32,9 +32,9 @@ public interface DelegationService {
     Delegation set (Delegation delegation);
     void deleteById(Integer id);
 
-    boolean changeAcceptDelegation(Integer delegationId , Integer userId);
+    String changeAcceptDelegation(Integer delegationId , Integer userId);
 
-    boolean changeFinishedEdition(Integer delegationId);
+    String changeFinishedEdition(Integer delegationId);
 
 
 }

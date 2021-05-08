@@ -229,13 +229,6 @@ public class Delegation {
 
 
 
-    public boolean changeConfirmation(){
-      return this.confirmation=!this.confirmation;
-    }
-
-    public boolean changeFinishedEdition(){
-        return this.finishedEdition=!this.finishedEdition;
-    }
 
 
     public boolean isFinishedEdition() {

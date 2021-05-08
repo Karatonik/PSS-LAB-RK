@@ -68,11 +68,11 @@ public class DelegationController {
 
 
     @PutMapping("/acc/{delegationId}/{userId}")
-    public boolean changeAcceptDelegation(@PathVariable Integer delegationId , @PathVariable Integer userId){
+    public String changeAcceptDelegation(@PathVariable Integer delegationId , @PathVariable Integer userId){
         return this.delegationServiceImp.changeAcceptDelegation(delegationId,userId);
     }
     @PutMapping("finished/{delegationId}")
-    public  boolean changeFinishedEdition(@PathVariable Integer delegationId){
+    public  String changeFinishedEdition(@PathVariable Integer delegationId){
         return this.delegationServiceImp.changeFinishedEdition(delegationId);
     }
 
