@@ -1,6 +1,7 @@
 package pss.demo.services.interfaces;
 
 
+import io.swagger.models.auth.In;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import pss.demo.models.Delegation;
 
@@ -30,4 +31,10 @@ public interface DelegationService {
     //
     Delegation set (Delegation delegation);
     void deleteById(Integer id);
+
+    boolean changeAcceptDelegation(Integer delegationId , Integer userId);
+
+    boolean changeFinishedEdition(Integer delegationId);
+
+
 }

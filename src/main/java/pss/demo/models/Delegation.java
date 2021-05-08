@@ -56,8 +56,14 @@ public class Delegation {
     @ManyToOne
     User user;
 
+    boolean finishedEdition;
+
+    boolean confirmation;
+
     public Delegation() {
     }
+
+
 
     public Delegation(Integer delegationId, String description, Date dateTimeStart, Date dateTimeStop
             , Float travelDietAmount, Integer breakfastNumber, Integer dinnerNumber
@@ -81,6 +87,8 @@ public class Delegation {
         this.otherOutlayDesc = otherOutlayDesc;
         this.otherOutlayPrice = otherOutlayPrice;
         this.user = user;
+        this.confirmation=false;
+        this.finishedEdition=false;
     }
 
     public Integer getDelegationId() {
@@ -220,6 +228,31 @@ public class Delegation {
     }
 
 
+
+    public boolean changeConfirmation(){
+      return this.confirmation=!this.confirmation;
+    }
+
+    public boolean changeFinishedEdition(){
+        return this.finishedEdition=!this.finishedEdition;
+    }
+
+
+    public boolean isFinishedEdition() {
+        return finishedEdition;
+    }
+
+    public void setFinishedEdition(boolean finishedEdition) {
+        this.finishedEdition = finishedEdition;
+    }
+
+    public boolean isConfirmation() {
+        return confirmation;
+    }
+
+    public void setConfirmation(boolean confirmation) {
+        this.confirmation = confirmation;
+    }
     @Override
     public String toString() {
         return "delegationId=" + delegationId +

@@ -50,6 +50,6 @@ public class AuthController {
 	}
 	@PostMapping("/google")
 	public ResponseEntity<?> signInByGoogle(SignupRequest signUpRequest){
-		return null;
+		return authenticate.signInByGoogle(signUpRequest);
 	}
 }
