@@ -101,12 +101,18 @@ public class DelegationServiceImp implements DelegationService {
             if (optionalUser.isPresent()){
                 User admin =optionalUser.get();
                 Set<Role> roles = admin.getRoleSet();
+
                 if(roles.contains(new Role(ERole.ROLE_ADMIN))){
                     Delegation delegation = optionalDelegation.get();
+
                     if(delegation.isConfirmation()){
+                        delegation.setFinishedEdition(false);
                         delegation.setConfirmation(false);
-                    }else{
+
+                    }else if(delegation.isFinishedEdition()){
                         delegation.setConfirmation(true);
+                    }else {
+                        return false;
                     }
                     delegationRepository.save(delegation);
                     return true;
@@ -122,6 +128,7 @@ public class DelegationServiceImp implements DelegationService {
         if(optionalDelegation.isPresent()){
             Delegation delegation = optionalDelegation.get();
             if(delegation.isFinishedEdition()){
+                delegation.setConfirmation(false);
                 delegation.setFinishedEdition(false);
             }else{
                 delegation.setFinishedEdition(true);
