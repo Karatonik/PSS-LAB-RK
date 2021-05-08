@@ -56,7 +56,7 @@ public class DelegationController {
 
     //edit
     @PutMapping("/delegationEdit/{delegation}")
-    public ResponseEntity<Delegation> updateDelegation(Delegation delegation){
+    public ResponseEntity<Delegation> updateDelegation(@PathVariable Delegation delegation){
         return new ResponseEntity<>(delegationServiceImp.set(delegation), HttpStatus.OK);
     }
     //delete
@@ -64,6 +64,16 @@ public class DelegationController {
     public ResponseEntity<Void> deleteDelegation(@PathVariable  Integer id){
         delegationServiceImp.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+    @PutMapping("/acc/{delegationId}/{userId}")
+    public boolean changeAcceptDelegation(@PathVariable Integer delegationId , @PathVariable Integer userId){
+        return this.delegationServiceImp.changeAcceptDelegation(delegationId,userId);
+    }
+    @PutMapping("finished/{delegationId}")
+    public  boolean changeFinishedEdition(@PathVariable Integer delegationId){
+        return this.delegationServiceImp.changeFinishedEdition(delegationId);
     }
 
 
