@@ -39,10 +39,13 @@ public class UserController {
         userServiceImp.changePassword(userId,newPassword);
     }
     //d
-    @DeleteMapping
-    public void deleteById(int userId){
-        userServiceImp.deleteById(userId);
+
+    @DeleteMapping("/deleteUser/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable  Integer id){
+        userServiceImp.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
+
     //e
     @PostMapping("/setDelegation/{userId}")
     public void setDelegation( @RequestBody Delegation delegation,  @PathVariable Integer userId){

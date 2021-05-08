@@ -101,17 +101,19 @@ public class DelegationServiceImp implements DelegationService {
             if (optionalUser.isPresent()){
                 User admin =optionalUser.get();
                 Set<Role> roles = admin.getRoleSet();
-
-                if(roles.contains(new Role(ERole.ROLE_ADMIN))){
+                System.out.println(roles.toString());
+                if(roles.toString().contains("ADMIN")){
                     Delegation delegation = optionalDelegation.get();
-
+                    System.out.println("Set zawiera: ");
                     if(delegation.isConfirmation()){
                         delegation.setFinishedEdition(false);
                         delegation.setConfirmation(false);
-
+                        System.out.println("Jest potwierdzone: ");
                     }else if(delegation.isFinishedEdition()){
+                        System.out.println("Koniec edycji potwirdzam");
                         delegation.setConfirmation(true);
                     }else {
+
                         return "Delegacja nie jest ukończona";
                     }
                     delegationRepository.save(delegation);

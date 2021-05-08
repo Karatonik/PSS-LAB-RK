@@ -69,6 +69,7 @@ class Delegation extends React.Component{
         axios.post("http://localhost:8080/users/setDelegation/"+delegation.user,delegation)
         .then(response=>{
             if(response.data!=null){
+               
                 this.setState({"show":true});
                 setTimeout(()=>this.setState({"show":false}),3000);
             }else{

@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-
 import AuthService from "../services/auth.service";
+
+
+
 
 const required = value => {
   if (!value) {
@@ -80,8 +82,28 @@ export default class Login extends Component {
     }
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   render() {
+  
+  
+
     return (
+       
+    
       <div className="col-md-12">
         <div className="card card-container">
           <img
@@ -149,6 +171,8 @@ export default class Login extends Component {
           </Form>
         </div>
       </div>
+   
+    
     );
   }
 }

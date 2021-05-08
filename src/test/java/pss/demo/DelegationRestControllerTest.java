@@ -1,7 +1,7 @@
 package pss.demo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.beans.binding.BooleanExpression;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

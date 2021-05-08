@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card,Table,ButtonGroup,Button,InputGroup,FormControl} from 'react-bootstrap'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faEdit,faTrash,faFastForward,faStepForward,faFastBackward, faTimes,faStepBackward, faList} from '@fortawesome/free-solid-svg-icons';
+import {faEdit,faTrash,faFastForward,faStepForward,faFastBackward, faFilePdf,faTimes,faStepBackward, faUndo,faList,faPrint,faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import MyToast from './MyToast';
 import {Link} from 'react-router-dom';
@@ -23,15 +23,73 @@ class DelegationList extends React.Component{
     }
 
     
-
+    getPDF=(delegationdId)=>{
+        axios.get("http://localhost:8080/pdf/local/"+delegationdId)
+        .then(response=>{
+            if(response.data!=null){
+                this.setState({});
+             
+                this.setState({
+                    
+                });
+            }
+            else{
+                this.setState({"GetPDF":false});
+            }
+        });
+    };
+    drukPDF=(delegationdId)=>{
+        axios.get("http://localhost:8080/pdf/"+delegationdId)
+        .then(response=>{
+                window.open("http://localhost:8080/pdf/"+delegationdId)
+                this.setState({
+                   
+                });
+            
+            
+        });
+    };
+ 
+    changeAcceptDel = (delegationId,userId)=>{
+        axios.put("http://localhost:8080/delegations/acc/"+delegationId+"/"+localStorage.getItem('id'))
+        .then(response=>{
+            if(response.data!=null){
+                this.setState({
+                    
+                });
+                window.location.reload();
+            }
+            console.log(response)
+        }).catch((error)=>{
+            console.error("Error - " +error);
+        });
+    }
+    chagenFinished = (delegationId)=>{
+        axios.put("http://localhost:8080/delegations/finished/"+delegationId)
+        .then(response=>{
+            if(response.data!=null){
+                this.setState({
+                    
+                });
+                window.location.reload();
+            }
+            console.log(response)
+        }).catch((error)=>{
+            console.error("Error - " +error);
+        });
+    }
 
 
     findAllDelegations(){
         axios.get(" http://localhost:8080/delegations/orderByDateStartDesc")
         .then(response=>response.data)
+        
         .then((data)=>{
+            console.log(data)
             this.setState({delegations: data})
+            
         });
+        
     }
     deleteDelegation=(delegationdId)=>{
         axios.delete("http://localhost:8080/delegations/deleteDelegations/"+delegationdId)
@@ -97,8 +155,8 @@ class DelegationList extends React.Component{
         const columnstyle = {      
          
             height: "500px",
-            width: "1700px",
-            marginLeft:"-300px"
+            width: "1900px",
+            marginLeft:"-395px"
         };
       
         const{delegations,currentPage,delegationsPerPage,search}=this.state;
@@ -125,6 +183,7 @@ class DelegationList extends React.Component{
             <div style={columnstyle} >
                  <div style={{"display":this.state.show ? "block" : "none"}}>
                     <MyToast show={this.state.show} message={"Delegation Deleted Successfully."}type={"danger"}/>
+                
                 </div>
                 <Card className={"border border-dark bg-dark text-white"}>
                 <Card.Header>
@@ -164,6 +223,9 @@ class DelegationList extends React.Component{
                                 <th>Other Tickets Price</th>
                                 <th>Other Outlay Desc</th>
                                 <th>Other Outlay Price</th>
+                                <th>Confirmation</th>
+                                <th>Finished Edition</th>
+                                <th>Actions</th>
                               
                             </tr>
                         </thead>
@@ -192,13 +254,19 @@ class DelegationList extends React.Component{
                                     <td>{delegation.otherTicketsPrice}</td>
                                     <td>{delegation.otherOutlayDesc}</td>
                                     <td>{delegation.otherOutlayPrice}</td>
+                                    <td>{delegation.confirmation.toString()}</td>
+                                    <td>{delegation.finishedEdition.toString()}</td>
                                   
                                    
                                    
                                     <td>
                                         <ButtonGroup>
                                             <Link to={"editDelegation/"+delegation.delegationId }className= "btn btn-sm btn-outline-primary"><FontAwesomeIcon icon= {faEdit}/></Link>{' '}
-                                            <Button size = "sm"variant = "outline-danger"onClick={this.deleteDelegation.bind(this,delegation.delegationId)} ><FontAwesomeIcon icon= {faTrash}/></Button>
+                                            <Button size = "sm"variant="outline-danger"onClick={this.deleteDelegation.bind(this,delegation.delegationId)} ><FontAwesomeIcon icon= {faTrash}/></Button>
+                                            <Button size = "sm"variant="outline-info"onClick={this.getPDF.bind(this,delegation.delegationId)} ><FontAwesomeIcon icon={faFilePdf}/></Button>
+                                            <Button size = "sm"variant="outline-primary"onClick={this.drukPDF.bind(this,delegation.delegationId)} ><FontAwesomeIcon icon={faPrint}/></Button>
+                                            <Button size = "sm"variant="outline-success"onClick={this.changeAcceptDel.bind(this,delegation.delegationId,delegation.userId)} ><FontAwesomeIcon icon={faCheckCircle}/></Button>
+                                            <Button size = "sm"variant="outline-warning"onClick={this.chagenFinished.bind(this,delegation.delegationId)} ><FontAwesomeIcon icon={faUndo}/></Button>
                                         </ButtonGroup>
                                     </td>
                                     
