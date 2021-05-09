@@ -33,4 +33,7 @@ public interface UserService {
     public User get(int userId);
 
     User setUserAsAdmin(int adminId, int userId);
+
+    public String activateUser(String key);
+
 }

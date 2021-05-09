@@ -127,6 +127,25 @@ public class UserServiceImp implements UserService {
         return null;
     }
 
+    @Override
+    public String activateUser(String key) {
+    Optional<User> optionalUser = userRepository.findByUserKey(key);
+    if(optionalUser.isPresent()){
+        User user = optionalUser.get();
+
+        if(user.isStatus()){
+            return "Konto jest już aktywne";
+        }else {
+            user.setStatus(true);
+
+            userRepository.save(user);
+            return "Operacja powiodła się twoje konto zostało aktywowane";
+        }
+
+    }
+        return "Wystąpił błąd serwisu";
+    }
+
 
     //test
     public Set<User> test(){

@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -66,6 +67,8 @@ public class User {
     @JsonIgnore
     Set<Delegation> delegationSet;
 
+    @JsonIgnore
+    private String userKey;
 
     public User() {
     }
@@ -83,6 +86,8 @@ public class User {
         this.registrationDate = registrationDate;
         this.roleSet = roleSet;
         this.delegationSet = delegationSet;
+        this.userKey =String.valueOf((hashCode()*hashCode())+21*hashCode());
+        this.status=false;
     }
 
     public User(@NotBlank(message = "companyName cannot be blank ") String companyName,
@@ -104,6 +109,8 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.userKey=String.valueOf((hashCode()*hashCode())+21*hashCode());
+        this.status=false;
 
     }
 
@@ -204,4 +211,39 @@ public class User {
         this.delegationSet = delegationSet;
     }
 
+
+    public String getUserKey() {
+        return userKey;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return isStatus() == user.isStatus() &&
+                Objects.equals(getUserId(), user.getUserId()) &&
+                Objects.equals(getCompanyName(), user.getCompanyName()) &&
+                Objects.equals(getCompanyAddress(), user.getCompanyAddress()) &&
+                Objects.equals(getCompanyNip(), user.getCompanyNip()) &&
+                Objects.equals(getName(), user.getName()) &&
+                Objects.equals(getLastName(), user.getLastName()) &&
+                Objects.equals(getEmail(), user.getEmail()) &&
+                Objects.equals(getPassword(), user.getPassword()) &&
+                Objects.equals(getRegistrationDate(), user.getRegistrationDate()) &&
+                Objects.equals(getRoleSet(), user.getRoleSet()) &&
+                Objects.equals(getDelegationSet(), user.getDelegationSet()) &&
+                Objects.equals(userKey, user.userKey);
+    }
+
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUserId(), getCompanyName(), getCompanyAddress(), getCompanyNip(), getName(), getLastName(), getEmail(), getPassword(), isStatus(), getRegistrationDate(), getRoleSet(), getDelegationSet(), userKey);
+    }
+    public void getNewKey(){
+        this.userKey = String.valueOf((hashCode()*hashCode())+21*hashCode());
+    }
 }
