@@ -70,4 +70,11 @@ public class UserController {
         return new ResponseEntity<>(userServiceImp.set(user), HttpStatus.OK);
     }
 
+
+
+    @PutMapping("/setadmin/{adminId}/{userId}")
+    public ResponseEntity<User> setUserAsAdmin(@PathVariable Integer adminId,@PathVariable Integer userId){
+        return new ResponseEntity<>(userServiceImp.setUserAsAdmin(adminId,userId),HttpStatus.OK);
+    }
+
 }

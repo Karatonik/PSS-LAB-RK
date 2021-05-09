@@ -31,4 +31,6 @@ public interface UserService {
 //    public void addRole(ERole roleName, int userId);
 
     public User get(int userId);
+
+    User setUserAsAdmin(int adminId, int userId);
 }
