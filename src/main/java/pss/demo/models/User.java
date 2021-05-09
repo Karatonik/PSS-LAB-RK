@@ -2,6 +2,7 @@ package pss.demo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.hash.Hashing;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -86,7 +88,9 @@ public class User {
         this.registrationDate = registrationDate;
         this.roleSet = roleSet;
         this.delegationSet = delegationSet;
-        this.userKey =String.valueOf((hashCode()*hashCode())+21*hashCode());
+        this.userKey =Hashing.sha256()
+                .hashString(String.valueOf(hashCode()), StandardCharsets.UTF_8)
+                .toString();
         this.status=false;
     }
 
@@ -109,7 +113,9 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.userKey=String.valueOf((hashCode()*hashCode())+21*hashCode());
+        this.userKey= Hashing.sha256()
+                .hashString(String.valueOf(hashCode()), StandardCharsets.UTF_8)
+                .toString();
         this.status=false;
 
     }
@@ -244,6 +250,7 @@ public class User {
         return Objects.hash(getUserId(), getCompanyName(), getCompanyAddress(), getCompanyNip(), getName(), getLastName(), getEmail(), getPassword(), isStatus(), getRegistrationDate(), getRoleSet(), getDelegationSet(), userKey);
     }
     public void getNewKey(){
-        this.userKey = String.valueOf((hashCode()*hashCode())+21*hashCode());
-    }
+        this.userKey = Hashing.sha256()
+                .hashString(String.valueOf(hashCode()), StandardCharsets.UTF_8)
+                .toString();}
 }
