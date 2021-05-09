@@ -8,6 +8,7 @@ import pss.demo.models.Delegation;
 import pss.demo.models.User;
 import pss.demo.services.DelegationServiceImp;
 
+import javax.mail.MessagingException;
 import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -72,7 +73,7 @@ public class DelegationController {
         return this.delegationServiceImp.changeAcceptDelegation(delegationId,userId);
     }
     @PutMapping("finished/{delegationId}")
-    public  String changeFinishedEdition(@PathVariable Integer delegationId){
+    public  String changeFinishedEdition(@PathVariable Integer delegationId) throws MessagingException {
         return this.delegationServiceImp.changeFinishedEdition(delegationId);
     }
 
