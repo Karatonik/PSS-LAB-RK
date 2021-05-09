@@ -47,7 +47,7 @@ public class User {
     String password;
 
 
-    @Column(columnDefinition = "boolean default true")
+    @Column(columnDefinition = "boolean default false")
     boolean status;
 
     @CreationTimestamp

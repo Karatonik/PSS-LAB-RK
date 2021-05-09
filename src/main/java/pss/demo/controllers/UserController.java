@@ -77,4 +77,9 @@ public class UserController {
         return new ResponseEntity<>(userServiceImp.setUserAsAdmin(adminId,userId),HttpStatus.OK);
     }
 
+    @GetMapping("/test")
+    public Set<User> test(){
+        return userServiceImp.test();
+    }
+
 }

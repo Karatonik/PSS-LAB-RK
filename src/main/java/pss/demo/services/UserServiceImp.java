@@ -127,4 +127,10 @@ public class UserServiceImp implements UserService {
         return null;
     }
 
+
+    //test
+    public Set<User> test(){
+        return userRepository.findByRoleSetContaining(new Role(2, ERole.ROLE_ADMIN));
+    }
+
 }
