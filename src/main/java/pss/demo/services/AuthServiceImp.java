@@ -70,7 +70,7 @@ public class AuthServiceImp implements AuthService {
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
-                roles));
+                roles,userDetails.isStatus()));
     }
 
     @Override
