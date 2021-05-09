@@ -10,7 +10,9 @@ import pss.demo.models.User;
 import pss.demo.repositorys.DelegationRepository;
 import pss.demo.repositorys.UserRepository;
 import pss.demo.services.interfaces.DelegationService;
+import pss.demo.services.interfaces.EmailService;
 
+import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,11 +22,13 @@ import java.util.Set;
 public class DelegationServiceImp implements DelegationService {
     UserRepository userRepository;
     DelegationRepository delegationRepository;
+    EmailService emailService;
 
     @Autowired
-    public DelegationServiceImp(UserRepository userRepository, DelegationRepository delegationRepository) {
+    public DelegationServiceImp(EmailService emailService,UserRepository userRepository, DelegationRepository delegationRepository) {
         this.userRepository = userRepository;
         this.delegationRepository = delegationRepository;
+        this.emailService=emailService;
     }
 
     @Override
@@ -112,6 +116,7 @@ public class DelegationServiceImp implements DelegationService {
                     }else if(delegation.isFinishedEdition()){
                         System.out.println("Koniec edycji potwirdzam");
                         delegation.setConfirmation(true);
+                        emailService.confirmationDelegationMail(delegation.getDelegationId());
                     }else {
 
                         return "Delegacja nie jest ukończona";
@@ -125,7 +130,7 @@ public class DelegationServiceImp implements DelegationService {
     }
 
     @Override
-    public String changeFinishedEdition(Integer delegationId) {
+    public String changeFinishedEdition(Integer delegationId) throws MessagingException {
         Optional<Delegation>optionalDelegation = delegationRepository.findById(delegationId);
         if(optionalDelegation.isPresent()){
             Delegation delegation = optionalDelegation.get();
@@ -134,6 +139,7 @@ public class DelegationServiceImp implements DelegationService {
                 delegation.setFinishedEdition(false);
             }else{
                 delegation.setFinishedEdition(true);
+                emailService.finishEditionDelegationMail(delegation.getDelegationId());
             }
             delegationRepository.save(delegation);
             return "Zapisano";

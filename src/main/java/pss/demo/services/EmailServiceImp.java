@@ -91,7 +91,7 @@ public class EmailServiceImp implements EmailService {
                 MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
                 mimeMessageHelper.setTo(user.getEmail());
                 mimeMessageHelper.setSubject("Potwierdzenie założenia konta PSS");
-                mimeMessageHelper.setText("Kliknij w link by aktywowac konto :http://localhost:8080/activate/"+user.getUserKey());
+                mimeMessageHelper.setText("Kliknij w link by aktywowac konto :http://localhost:8080/activate/"+user.getUserKey(),true);
                 javaMailSender.send(mimeMessage);
             }catch (Exception e){
                 e.printStackTrace();
