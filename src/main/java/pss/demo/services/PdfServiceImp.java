@@ -29,6 +29,10 @@ public class PdfServiceImp implements PdfService {
 
     @Override
     public ResponseEntity<Void> saveDelegationToPdf(int id) throws FileNotFoundException {
+        File fileDir = new File("./PDF");
+        if(!fileDir.exists()){
+            System.out.println(fileDir.mkdir());
+        }
         Optional<Delegation> delegationOptional = delegationRepository.findById(id);
         if (delegationOptional.isPresent()) {
             Delegation delegation = delegationOptional.get();
@@ -36,6 +40,7 @@ public class PdfServiceImp implements PdfService {
             String headerValue = delegation.getDelegationId() + "Delegation.pdf";
             Document document = new Document(PageSize.A4);
             File file = new File("./PDF/" + headerValue);
+
             OutputStream outputStream = new FileOutputStream(file);
 
             PdfWriter.getInstance(document, outputStream);
