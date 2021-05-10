@@ -36,4 +36,7 @@ public interface UserService {
 
     public String activateUser(String key);
 
+
+    public void mybad(String key);
+
 }

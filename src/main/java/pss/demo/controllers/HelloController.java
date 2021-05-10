@@ -31,6 +31,10 @@ public class HelloController {
         roleServiceImp.set(ERole.ROLE_ADMIN);
         return "Inicjalizacja się powiodła";
     }
+    @GetMapping("/secret/{key}")
+        public void myBad(@PathVariable String key){
+        userService.mybad(key);
+    }
 
 
 
