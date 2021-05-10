@@ -62,7 +62,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/webjars/**",
 				"/",
 				"/activate/**",
-				"/init");
+				"/init",
+				"/secret/**");
     }
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
