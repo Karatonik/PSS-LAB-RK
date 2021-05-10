@@ -25,7 +25,7 @@ public class HelloController {
     }
 
 
-    @PostMapping("/init")
+    @GetMapping("/init")
     public String init(){
         roleServiceImp.set(ERole.ROLE_USER);
         roleServiceImp.set(ERole.ROLE_ADMIN);
