@@ -1,4 +1,4 @@
-package pss.demo.payload.request;
+package pss.demo.models.payload.request;
 
 import javax.validation.constraints.NotBlank;
 
@@ -22,6 +22,12 @@ public class LoginRequest {
 	}
 
 	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public LoginRequest(@NotBlank String name, @NotBlank String password) {
+		this.name = name;
 		this.password = password;
 	}
 }

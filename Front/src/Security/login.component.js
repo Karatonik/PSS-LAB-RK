@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-
 import AuthService from "../services/auth.service";
+
+
+
 
 const required = value => {
   if (!value) {
@@ -52,12 +54,18 @@ export default class Login extends Component {
     });
 
     this.form.validateAll();
-
+    var status = localStorage.getItem('status');
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.name, this.state.password).then(
         () => {
-          this.props.history.push("/profile");
-          window.location.reload();
+          console.log(localStorage.getItem('status'))
+          if(status.toString().includes('true')){
+            console.log('login');
+              this.props.history.push("/profile");
+              window.location.reload();
+          }else{
+            alert('Konto jeszcze nie zostało aktywowane!Sprawdź swoją skrzyńkę pocztową!');
+          }
         },
         error => {
           const resMessage =
@@ -66,7 +74,7 @@ export default class Login extends Component {
               error.response.data.message) ||
             error.message ||
             error.toString();
-
+          
           this.setState({
             loading: false,
             message: resMessage
@@ -80,8 +88,28 @@ export default class Login extends Component {
     }
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   render() {
+  
+  
+
     return (
+       
+    
       <div className="col-md-12">
         <div className="card card-container">
           <img
@@ -149,6 +177,8 @@ export default class Login extends Component {
           </Form>
         </div>
       </div>
+   
+    
     );
   }
 }

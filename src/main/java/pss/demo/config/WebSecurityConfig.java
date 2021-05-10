@@ -1,4 +1,4 @@
-package pss.demo.security;
+package pss.demo.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import pss.demo.security.jwt.AuthEntryPointJwt;
-import pss.demo.security.jwt.AuthTokenFilter;
-import pss.demo.security.services.UserDetailsServiceImpl;
+import pss.demo.jwt.AuthEntryPointJwt;
+import pss.demo.jwt.AuthTokenFilter;
+import pss.demo.services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -59,7 +59,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-resources/**",
                 "/configuration/security",
                 "/swagger-ui.html",
-                "/webjars/**");
+                "/webjars/**",
+				"/",
+				"/activate/**");
     }
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -67,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.authorizeRequests().antMatchers("/api/auth/**").permitAll()
-			.antMatchers("/api/test/**","/users/**","/delegations/**").permitAll()
+			.antMatchers("/api/test/**","/users/**","/delegations/**","/pdf/**").permitAll()
 			.anyRequest().authenticated();
 
 

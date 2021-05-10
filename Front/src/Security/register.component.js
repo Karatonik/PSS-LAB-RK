@@ -77,7 +77,7 @@ export default class Register extends Component {
       companyNip: "",
       name: "",
       lastName: "",
-      email: "",
+      email:"",
       password: "",
    
 
@@ -109,7 +109,7 @@ export default class Register extends Component {
 
   onChangeName(e) {
     this.setState({
-      name: e.target.value
+      name: e.target.value 
     });
   }
 
@@ -151,6 +151,7 @@ export default class Register extends Component {
             message: response.data.message,
             successful: true
           });
+          console.log(response)
         },
         error => {
           const resMessage =
@@ -168,9 +169,11 @@ export default class Register extends Component {
       );
     }
   }
-
+  
   render() {
     return (
+      <div>
+     
       <div className="col-md-12">
         <div className="card card-container">
           <img
@@ -214,10 +217,9 @@ export default class Register extends Component {
                   <label htmlFor="email">Email</label>
                   <Input
                     type="email"
-                    // type="text"
                     className="form-control"
                     name="email"
-                    value={this.state.email}
+                    value={this.state.emai}
                     onChange={this.onChangeEmail}
                     validations={[required, email]}
                      pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
@@ -303,6 +305,8 @@ export default class Register extends Component {
           </Form>
         </div>
       </div>
+      </div>
+      
     );
   }
 }

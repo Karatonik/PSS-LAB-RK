@@ -1,9 +1,11 @@
 package pss.demo.services.interfaces;
 
 
+import io.swagger.models.auth.In;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import pss.demo.models.Delegation;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 public interface DelegationService {
@@ -30,4 +32,10 @@ public interface DelegationService {
     //
     Delegation set (Delegation delegation);
     void deleteById(Integer id);
+
+    String changeAcceptDelegation(Integer delegationId , Integer userId);
+
+    String changeFinishedEdition(Integer delegationId) throws MessagingException;
+
+
 }

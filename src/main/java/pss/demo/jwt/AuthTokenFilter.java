@@ -1,4 +1,4 @@
-package pss.demo.security.jwt;
+package pss.demo.jwt;
 
 
 import org.slf4j.Logger;
@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import pss.demo.security.services.UserDetailsServiceImpl;
+import pss.demo.services.UserDetailsServiceImpl;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

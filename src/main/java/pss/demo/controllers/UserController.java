@@ -39,10 +39,13 @@ public class UserController {
         userServiceImp.changePassword(userId,newPassword);
     }
     //d
-    @DeleteMapping
-    public void deleteById(int userId){
-        userServiceImp.deleteById(userId);
+
+    @DeleteMapping("/deleteUser/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable  Integer id){
+        userServiceImp.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
+
     //e
     @PostMapping("/setDelegation/{userId}")
     public void setDelegation( @RequestBody Delegation delegation,  @PathVariable Integer userId){
@@ -65,6 +68,18 @@ public class UserController {
     @PutMapping("/userEdit/{user}")
     public ResponseEntity<User> updateUser(User user){
         return new ResponseEntity<>(userServiceImp.set(user), HttpStatus.OK);
+    }
+
+
+
+    @PutMapping("/setadmin/{adminId}/{userId}")
+    public ResponseEntity<User> setUserAsAdmin(@PathVariable Integer adminId,@PathVariable Integer userId){
+        return new ResponseEntity<>(userServiceImp.setUserAsAdmin(adminId,userId),HttpStatus.OK);
+    }
+
+    @GetMapping("/test")
+    public Set<User> test(){
+        return userServiceImp.test();
     }
 
 }

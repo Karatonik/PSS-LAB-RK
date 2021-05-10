@@ -18,6 +18,12 @@ import DelegationList from './Components/DelegationList';
 import ChangePass from './Components/ChangePass';
 import Delegation from './Components/Delegation';
 import Footer from './Components/Footer';
+import LoginFb from './Components/LoginFb'
+import LoginGoogle from './Components/LoginG';
+import ChangeAcceptDelegation from "./Components/ChangeAcceptDelegation";
+import DelegationListUser from './Components/DelegationListUser';
+
+
 
 class App extends Component {
   constructor(props) {
@@ -89,6 +95,13 @@ class App extends Component {
                   </Link>
                 </li>
               )}
+                {showAdminBoard && (
+                <li className="nav-item">
+                  <Link to={"/changeAccept"} className="nav-link">
+                    Change Accept Delegation
+                  </Link>
+                </li>
+              )}
 
 
            
@@ -106,6 +119,18 @@ class App extends Component {
                   Log Out
                 </a>
               </li>
+              <li className="nav-item">
+                <Link to={"/delegationUser"} className="nav-link">
+                  List Delegations
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/addDelegation"} className="nav-link">
+                  Add Delegations
+                </Link>
+              </li>
+
+             
             </div>
           ) : (
             <div className="navbar-nav ml-auto">
@@ -114,6 +139,12 @@ class App extends Component {
                   Login
                 </Link>
               </li>
+           
+              <li className="nav-item">
+              <Link to={"/loginFb"} className="nav-link">
+                  Login Facebook
+                </Link>
+                </li>
 
               <li className="nav-item">
                 <Link to={"/register"} className="nav-link">
@@ -121,7 +152,11 @@ class App extends Component {
                 </Link>
               </li>
 
-           
+            <li>
+            <Link to={"/loginGoogle"} className="nav-link">
+                  Login Google
+                </Link>
+            </li>
 
 			
             </div>
@@ -141,11 +176,15 @@ class App extends Component {
 			      <Route path="/addUser" exact component ={User}/>
 			      <Route path="/listUsers" exact component ={UserList}/>
 			      <Route path="/listDelegations" exact component ={DelegationList}/>
+            <Route path="/delegationUser" exact component ={DelegationListUser}/>
 			      <Route path = "/addDelegation" exact component ={Delegation}/>
 			      <Route path = "/changePass" exact component = {ChangePass}/>
 			      <Route path="/edit/:id" exact component ={User}/>
 			      <Route path="/editDelegation/:id" exact component ={Delegation}/>
-
+            <Route path = "/loginFb" exact component = {LoginFb}/>
+            <Route path = "/loginGoogle" exact component = {LoginGoogle}/>
+            <Route path = "/changeAccept" exact component = {ChangeAcceptDelegation}/>
+       
 
           </Switch>
 		  <Footer/>

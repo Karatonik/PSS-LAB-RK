@@ -1,11 +1,10 @@
-package pss.demo.security.services;
+package pss.demo.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import pss.demo.models.User;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,18 +20,22 @@ public class UserDetailsImpl implements UserDetails {
 
 	private String email;
 
+
+	private boolean status;
+
 	@JsonIgnore
 	private String password;
 
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public UserDetailsImpl(Integer id, String name, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+                           Collection<? extends GrantedAuthority> authorities,boolean status) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.authorities = authorities;
+		this.status = status;
 	}
 
 	public static UserDetailsImpl build(User user) {
@@ -45,7 +48,7 @@ public class UserDetailsImpl implements UserDetails {
 				user.getName(),
 				user.getEmail(),
 				user.getPassword(),
-				authorities);
+				authorities,user.isStatus());
 	}
 
 	@Override
@@ -55,6 +58,14 @@ public class UserDetailsImpl implements UserDetails {
 
 	public Integer getId() {
 		return id;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 	public String getEmail() {

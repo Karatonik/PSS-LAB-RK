@@ -1,12 +1,7 @@
 package pss.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import pss.demo.enums.ERole;
 import pss.demo.models.Delegation;
 import pss.demo.models.Role;
@@ -16,11 +11,9 @@ import pss.demo.repositorys.RoleRepository;
 import pss.demo.repositorys.UserRepository;
 import pss.demo.services.interfaces.UserService;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -46,7 +39,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User set(User user) {
-       return userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override
@@ -97,8 +90,66 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User get(int userId) {
-        Optional<User>optionalUser= userRepository.findById(userId);
+        Optional<User> optionalUser = userRepository.findById(userId);
         return optionalUser.orElse(null);
     }
-   
+
+    @Override
+    public User setUserAsAdmin(int adminId, int userId) {
+        Optional<User> optionalAdmin = userRepository.findById(adminId);
+        if (optionalAdmin.isPresent()) {
+            System.out.println("admin instnieje");
+            Optional<User> optionalUser = userRepository.findById(userId);
+            if (optionalUser.isPresent()) {
+                System.out.println("user istnieje");
+
+                User admin = optionalAdmin.get();
+                Set<Role> roleSet = admin.getRoleSet();
+
+                if (roleSet.toString().contains("ADMIN")) {
+                    System.out.println("admin ma uprawnienia");
+                    User user = optionalUser.get();
+                    Set<Role> userRoleSet = user.getRoleSet();
+
+                    Role roleAdmin = roleRepository.findByRoleName(ERole.ROLE_ADMIN).get();
+
+
+                    userRoleSet.add(roleAdmin);
+
+                    user.setRoleSet(userRoleSet);
+
+                    return userRepository.save(user);
+                }
+
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public String activateUser(String key) {
+    Optional<User> optionalUser = userRepository.findByUserKey(key);
+    if(optionalUser.isPresent()){
+        User user = optionalUser.get();
+
+        if(user.isStatus()){
+            return "Konto jest już aktywne";
+        }else {
+            user.setStatus(true);
+
+            userRepository.save(user);
+            return "Operacja powiodła się twoje konto zostało aktywowane";
+        }
+
+    }
+        return "Wystąpił błąd serwisu";
+    }
+
+
+    //test
+    public Set<User> test(){
+        return userRepository.findByRoleSetContaining(new Role(2, ERole.ROLE_ADMIN));
+    }
+
 }

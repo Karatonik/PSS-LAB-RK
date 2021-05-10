@@ -8,6 +8,7 @@ import pss.demo.models.Delegation;
 import pss.demo.models.User;
 import pss.demo.services.DelegationServiceImp;
 
+import javax.mail.MessagingException;
 import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -56,7 +57,7 @@ public class DelegationController {
 
     //edit
     @PutMapping("/delegationEdit/{delegation}")
-    public ResponseEntity<Delegation> updateDelegation(Delegation delegation){
+    public ResponseEntity<Delegation> updateDelegation(@PathVariable Delegation delegation){
         return new ResponseEntity<>(delegationServiceImp.set(delegation), HttpStatus.OK);
     }
     //delete
@@ -64,6 +65,16 @@ public class DelegationController {
     public ResponseEntity<Void> deleteDelegation(@PathVariable  Integer id){
         delegationServiceImp.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+    @PutMapping("/acc/{delegationId}/{userId}")
+    public String changeAcceptDelegation(@PathVariable Integer delegationId , @PathVariable Integer userId){
+        return this.delegationServiceImp.changeAcceptDelegation(delegationId,userId);
+    }
+    @PutMapping("finished/{delegationId}")
+    public  String changeFinishedEdition(@PathVariable Integer delegationId) throws MessagingException {
+        return this.delegationServiceImp.changeFinishedEdition(delegationId);
     }
 
 
