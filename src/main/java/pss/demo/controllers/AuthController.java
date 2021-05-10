@@ -44,12 +44,9 @@ public class AuthController {
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 		return  authenticate.registerUser(signUpRequest);
 	}
-	@PostMapping("/fb")
+	@PostMapping("/external")
 	public ResponseEntity<?> signInByFb(SignupRequest signUpRequest){
 		return authenticate.singInByFacebook(signUpRequest);
 	}
-	@PostMapping("/google")
-	public ResponseEntity<?> signInByGoogle(SignupRequest signUpRequest){
-		return authenticate.signInByGoogle(signUpRequest);
-	}
+
 }
