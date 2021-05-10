@@ -9,7 +9,7 @@ import javax.validation.Valid;
 
 public interface AuthService {
 
-    ResponseEntity<?> authenticateUser( LoginRequest loginRequest);
+    ResponseEntity<?> authenticateUser( LoginRequest loginRequest,String password);
 
     ResponseEntity<?> registerUser( SignupRequest signUpRequest);
 

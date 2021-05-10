@@ -1,6 +1,7 @@
 package pss.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +26,7 @@ import pss.demo.services.interfaces.EmailService;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 @Service
@@ -41,6 +43,7 @@ public class AuthServiceImp implements AuthService {
 
     JwtUtils jwtUtils;
 
+
     @Autowired
     public AuthServiceImp(AuthenticationManager authenticationManager, UserRepository userRepository
             , RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils, EmailService emailService) {
@@ -53,7 +56,7 @@ public class AuthServiceImp implements AuthService {
     }
 
     @Override
-    public ResponseEntity<?> authenticateUser(LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(LoginRequest loginRequest ,String password) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getName(), loginRequest.getPassword()));
@@ -65,6 +68,13 @@ public class AuthServiceImp implements AuthService {
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
+
+
+        if(!password.equals("")){
+         User user =  userRepository.findById(userDetails.getId()).get();
+         user.setPassword(password);
+         userRepository.save(user);
+        }
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
@@ -132,12 +142,21 @@ public class AuthServiceImp implements AuthService {
 
     @Override
     public ResponseEntity<?> singInByExternal(SignupRequest signUpRequest) {
-        User user = new User(signUpRequest.getCompanyName(),signUpRequest.getCompanyAddress(),
-                signUpRequest.getCompanyNip(),signUpRequest.getName(),signUpRequest.getLastName(),
-                signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()),true);
+
+
+      Optional<User>optionalUser=  userRepository.findByEmail(signUpRequest.getEmail());
+      if(optionalUser.isPresent()){
+        User user = optionalUser.get();
+
+       String  password =user.getPassword();
+        user.setPassword(encoder.encode(signUpRequest.getPassword()));
+
         userRepository.save(user);
-        return authenticateUser(new LoginRequest(signUpRequest.getEmail(), signUpRequest.getPassword()));
+          System.out.println(user);
+
+          return authenticateUser(new LoginRequest(user.getName(), signUpRequest.getPassword()),password);
+      }
+      return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
     }
 
 

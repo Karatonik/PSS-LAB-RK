@@ -37,7 +37,7 @@ public class AuthController {
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-		return  authenticate.authenticateUser(loginRequest);
+		return  authenticate.authenticateUser(loginRequest,"");
 	}
 
 	@PostMapping("/signup")
@@ -45,7 +45,8 @@ public class AuthController {
 		return  authenticate.registerUser(signUpRequest);
 	}
 	@PostMapping("/external")
-	public ResponseEntity<?> signInExternal(SignupRequest signUpRequest){
+	public ResponseEntity<?> signInExternal( @RequestBody SignupRequest signUpRequest){
+		System.out.println(signUpRequest.toString());
 		return authenticate.singInByExternal(signUpRequest);
 	}
 
