@@ -146,6 +146,7 @@ public class AuthServiceImp implements AuthService {
 
       Optional<User>optionalUser=  userRepository.findByEmail(signUpRequest.getEmail());
       if(optionalUser.isPresent()){
+          System.out.println();
         User user = optionalUser.get();
 
        String  password =user.getPassword();
@@ -156,6 +157,7 @@ public class AuthServiceImp implements AuthService {
 
           return authenticateUser(new LoginRequest(user.getName(), signUpRequest.getPassword()),password);
       }
+        System.out.println(optionalUser);
       return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
     }
 
