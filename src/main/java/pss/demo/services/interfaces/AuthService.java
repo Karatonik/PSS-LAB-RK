@@ -13,7 +13,5 @@ public interface AuthService {
 
     ResponseEntity<?> registerUser( SignupRequest signUpRequest);
 
-    ResponseEntity<?> singInByFacebook(SignupRequest signUpRequest);
-
-    ResponseEntity<?> signInByGoogle(SignupRequest signUpRequest);//todo
+    ResponseEntity<?> singInByExternal(SignupRequest signUpRequest);
 }

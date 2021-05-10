@@ -119,6 +119,31 @@ public class User {
         this.status=false;
 
     }
+    public User(@NotBlank(message = "companyName cannot be blank ") String companyName,
+                @NotBlank(message = "companyAddress cannot be blank ") String companyAddress,
+                @NotBlank(message = "companyNip cannot be blank ")
+                @Pattern(regexp = "^[0-9]{10}$", message = "incorrect companyNip") String companyNip,
+                @NotBlank(message = "name cannot be blank ") String name,
+                @NotBlank(message = "lastName cannot be blank ") String lastName,
+                @NotBlank(message = "email cannot be blank ") @Pattern(regexp = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
+                        message = "incorrect email") String email,
+                @NotBlank(message = "password cannot be blank ")
+                @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$",
+                        message = "incorrect password") String password
+    ,boolean status) {
+        this.companyName = companyName;
+        this.companyAddress = companyAddress;
+        this.companyNip = companyNip;
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.userKey= Hashing.sha256()
+                .hashString(String.valueOf(hashCode()), StandardCharsets.UTF_8)
+                .toString();
+        this.status=status;
+
+    }
 
 
     public Integer getUserId() {

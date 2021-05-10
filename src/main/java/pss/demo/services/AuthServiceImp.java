@@ -129,23 +129,16 @@ public class AuthServiceImp implements AuthService {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
+
     @Override
-    public ResponseEntity<?> singInByFacebook(SignupRequest signUpRequest) {
+    public ResponseEntity<?> singInByExternal(SignupRequest signUpRequest) {
         User user = new User(signUpRequest.getCompanyName(),signUpRequest.getCompanyAddress(),
                 signUpRequest.getCompanyNip(),signUpRequest.getName(),signUpRequest.getLastName(),
                 signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+                encoder.encode(signUpRequest.getPassword()),true);
         userRepository.save(user);
         return authenticateUser(new LoginRequest(signUpRequest.getEmail(), signUpRequest.getPassword()));
     }
 
-    @Override
-    public ResponseEntity<?> signInByGoogle(SignupRequest signUpRequest) {
-        User user = new User(signUpRequest.getCompanyName(),signUpRequest.getCompanyAddress(),
-                signUpRequest.getCompanyNip(),signUpRequest.getName(),signUpRequest.getLastName(),
-                signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
-        userRepository.save(user);
-        return authenticateUser(new LoginRequest(signUpRequest.getEmail(), signUpRequest.getPassword()));
-    }
+
 }

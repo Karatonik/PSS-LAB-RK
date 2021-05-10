@@ -63,8 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/",
 				"/activate/**",
 				"/init",
-				"/secret/**",
-				"/api/auth/external");
+				"/secret/**");
     }
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
